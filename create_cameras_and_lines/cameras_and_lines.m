@@ -4,6 +4,7 @@ function [R, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s,
 fpix = 500;
 %varying noise level
 nlevel = [0:0.5:4];
+noize = 4;
 %number of lines
 nlines = 10;
 % camera's parameters
@@ -38,8 +39,8 @@ for lineInd = 1:2*nlines
         s = [xrand(1,1,[-2 2]); xrand(1,1,[-2 2]); xrand(1,1,[4 8])]; 
         
         temp1 = R * s + t1;
-        temp3 = R * R * s + t3;
-        if (projects_to_image(s(1:2)/s(3)*fpix + randn(2,1)*noize, width, height) ...
+        temp3 = R' * s + t3;
+        if (projects_to_image(s(1:2)/s(3)*fpix + randn(2,1) * noize, width, height) ...
                 && projects_to_image(temp1(1:2)/temp1(3)*fpix + randn(2,1) *  noize, width, height) ...
                 && projects_to_image(temp3(1:2)/temp3(3)*fpix + randn(2,1) *  noize, width, height))
             points(:, lineInd) = s;

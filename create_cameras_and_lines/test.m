@@ -1,6 +1,8 @@
-function [ R_err, t1_err, t2_err, t3_err ] = test( R_original, ...
-    t1_original, t2_original, t3_original, R_test, t1_test, t2_test, t3_test )
+function [ R_err, t_err ] = test( R_original, t_original, R_test, t_test )
 
+[index_best, y] = choose_best_solution(R_test, t_test, R_original, t_original);
+R_err = y(1);
+t_err = y(2);
 
 end
 
