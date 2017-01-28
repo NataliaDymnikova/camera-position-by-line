@@ -12,7 +12,12 @@ width= 640;
 height= 480;       
 
 %rotation matrix
-R = rodrigues(randn(3,1));
+a = randn();
+b = randn();
+c = randn();
+d = randn();
+n = sqrt (a^2 + b^2 + c^2 + d^2);
+R = get_r_abcd(a/n, b/n, c/n, d/n);
 %Rs = [R', diag([1,1,1]), R];
         
 camera1s = cell(1, length(nlevel));
@@ -50,6 +55,7 @@ for lineInd = 1:2*nlines
         n = n + 1;
         if (n > 1000)
             R = rodrigues(randn(3,1));
+            R = R / R(1);
             lineInd = 1;
             n = 0;
             k = k + 1;

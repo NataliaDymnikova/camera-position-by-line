@@ -8,6 +8,9 @@ function [R_err] = check_r_solver()
     l2 = get_lines(camera2s{1}, camera2e{1});
     l3 = get_lines(camera3s{1}, camera3e{1});
    
+    %check l
+    
+    
     [a, b, c, d] = solver_get_r_equations(l1, l1, l1);
     if isempty(a)
         R_err = Inf;
