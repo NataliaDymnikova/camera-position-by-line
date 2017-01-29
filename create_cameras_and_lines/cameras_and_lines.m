@@ -54,15 +54,19 @@ for lineInd = 1:2*nlines
         
         n = n + 1;
         if (n > 1000)
-            R = rodrigues(randn(3,1));
-            R = R / R(1);
+            a = randn();
+            b = randn();
+            c = randn();
+            d = randn();
+            n = sqrt (a^2 + b^2 + c^2 + d^2);
+            R = get_r_abcd(a/n, b/n, c/n, d/n);
+
             lineInd = 1;
             n = 0;
             k = k + 1;
         end
     end
 end
-
 
 %i = 0;
 for j = 1:length(nlevel)
@@ -101,11 +105,8 @@ for j = 1:length(nlevel)
 
     end
 end
-start_points = points(:, 1:nlines);
 
-%t2 = n;
-%t1 = k;
-%t3 = i;
+start_points = points(:, 1:nlines);
 end_points = points(:, nlines:nlines*2);
 
 end
