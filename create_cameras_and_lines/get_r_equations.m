@@ -10,9 +10,9 @@ function [eqs, known, unknown, kngroups, cfg, algB]  = get_r_equations()
     
     eqs(1) = a^2 + b^2 + c^2 + d^2 - 1;
     for j = 1:3
-        eqs(j + 1) = cross(R'*l3(:,j), R*l1(:,j))' * l2(:,j);
+        eqs(j + 1) = cross(R*l3(:,j), R'*l1(:,j))' * l2(:,j);
     end
-
+    
     unknown = {'a' 'b' 'c' 'd'};
 
     known = {};

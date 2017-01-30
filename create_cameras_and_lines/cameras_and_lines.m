@@ -1,7 +1,7 @@
 function [R, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e] = cameras_and_lines( )
 
 %focal length in pixels
-fpix = 500;
+fpix = 1;
 %varying noise level
 nlevel = [0:0.5:4];
 noize = 4;

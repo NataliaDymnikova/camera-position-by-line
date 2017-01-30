@@ -1,12 +1,14 @@
 function [ isOk ] = check_creation_lines( )
+isOk = true;
 
 [R, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e] = cameras_and_lines();
-l1 = get_lines_from_camera(camera1s{1}, camera1e{1});
-l2 = get_lines_from_camera(camera2s{1}, camera2e{1});
-l3 = get_lines_from_camera(camera3s{1}, camera3e{1});
+for i = 1:8
+    l1 = get_lines_from_camera(camera1s{i}, camera1e{i});
+    l2 = get_lines_from_camera(camera2s{i}, camera2e{i});
+    l3 = get_lines_from_camera (camera3s{i}, camera3e{i});
 
-isOk = cross(R'*l3(:,1), R*l1(:,1))' * l2(:,1) == 0;
-
+    isOk = isOk & (abs(cross(R*l3(:,1), R'*l1(:,1))' * l2(:,1)) < 10^-13);
+end
 end
 
 
