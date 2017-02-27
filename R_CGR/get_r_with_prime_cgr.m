@@ -1,4 +1,4 @@
-function [ R ] = get_r_with_prime_cgr( prime_num )
+function [ R,s1,s2,s3 ] = get_r_with_prime_cgr( prime_num )
 
 s1 = randi(100);
 s2 = randi(100);

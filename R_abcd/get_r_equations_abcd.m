@@ -1,4 +1,4 @@
-function [eqs, known, unknown, kngroups, cfg, algB]  = get_r_equations()
+function [eqs, known, unknown, kngroups, cfg, algB]  = get_r_equations_abcd()
 
     l1 = gbs_Matrix('l1_%d%d', 3, 3, 'real');    
     l2 = gbs_Matrix('l2_%d%d', 3, 3, 'real');    
@@ -28,7 +28,7 @@ function [eqs, known, unknown, kngroups, cfg, algB]  = get_r_equations()
     kngroups(19:27) = 3;    
 
     cfg = gbs_InitConfig();
-    cfg.InstanceGenerator = @generate_instances_for_eq;
+    cfg.InstanceGenerator = @generate_instances_for_eq_abcd;
 
     % no algB yet computed
     algB = [];   

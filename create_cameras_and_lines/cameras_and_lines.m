@@ -11,15 +11,10 @@ nlines = 10;
 width= 640;
 height= 480;       
 
-%rotation matrix
-a = randi(100);
-b = randi(100);
-c = randi(100);
-d = randi(100);
-n = sqrt (a^2 + b^2 + c^2 + d^2);
-R = get_r_abcd(a/n, b/n, c/n, d/n);
-%Rs = [R', diag([1,1,1]), R];
-R = get_r_with_prime(997);        
+%rotation matrix 
+%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+%R = r_abcd();
+R = r_cgr();
 
 points = zeros(3, 2*nlines);
 
@@ -64,3 +59,26 @@ t3 = randi(100,3,1);
 [start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e] = get_points(R, t1,t3,fpix, nlevel, nlines, width,height);
 end
 
+
+function [ R ] = r_abcd()
+
+a = randi(100);
+b = randi(100);
+c = randi(100);
+d = randi(100);
+n = sqrt (a^2 + b^2 + c^2 + d^2);
+R = get_r_abcd(a/n, b/n, c/n, d/n);
+
+end
+
+
+function [ R ] = r_cgr()
+
+s1 = randi(100);
+s2 = randi(100);
+s3 = randi(100);
+
+s = 1 + s1^2 + s2^2 + s3^2;
+R = get_r_cgr(s1,s2,s3) / s;
+
+end

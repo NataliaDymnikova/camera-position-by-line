@@ -1,4 +1,4 @@
-function [R,a,b,c,d] = get_r_with_prime(prime_num)
+function [R,a,b,c,d] = get_r_with_prime_abcd(prime_num)
     a = randi(100);
     b = randi(100);
     c = randi(100);
