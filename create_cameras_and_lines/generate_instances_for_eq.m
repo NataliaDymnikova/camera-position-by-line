@@ -28,7 +28,7 @@ l1 = mod(get_lines_from_camera(camera1s, camera1e), prime);
 l2 = mod(get_lines_from_camera(camera2s, camera2e), prime);
 l3 = mod(get_lines_from_camera(camera3s, camera3e), prime);
 
-syms a b c d;
+syms a b c d real;
 R2 = get_r_abcd(a,b,c,d);
 
 eqi(1) = a^2 + b^2 + c^2 + d^2 - 1;
