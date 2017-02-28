@@ -6,7 +6,7 @@ function [eqs, known, unknown, kngroups, cfg, algB]  = get_r_equations_cgr()
 
     syms s1 s2 s3 real;
 
-    R = get_r_cgr(s1,s2,s3) / (1 + s1^2 + s2^2 + s3^2);
+    R = get_r_cgr(s1,s2,s3);
     
     for j = 1:3
         eqs(j) = cross(R*l3(:,j), R'*l1(:,j))' * l2(:,j);

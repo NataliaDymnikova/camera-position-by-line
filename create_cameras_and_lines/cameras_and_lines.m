@@ -1,4 +1,4 @@
-function [R, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e] = cameras_and_lines( )
+function [R, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e] = cameras_and_lines( get_r )
 
 %focal length in pixels
 fpix = 1;
@@ -14,7 +14,8 @@ height= 480;
 %rotation matrix 
 %!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 %R = r_abcd();
-R = r_cgr();
+%R = r_cgr();
+R = eval(get_r);
 
 points = zeros(3, 2*nlines);
 
