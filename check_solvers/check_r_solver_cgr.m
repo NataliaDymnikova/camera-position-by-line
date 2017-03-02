@@ -20,7 +20,7 @@ function [R_err, k] = check_r_solver_cgr()
     for i = 1:length(s1)
         R_test = get_r_cgr(s1(i),s2(i),s3(i)) / (1+s1(i)^2+s2(i)^2+s3(i)^2);
         [ R_err, t_err ] = test( R, t1, R_test, t1);
-        warning(strcat(num2str(i), '_', num2str(R_err)));
+        %disp(strcat(num2str(i), '_', num2str(R_err)));
         if (R_err < R_err_min)
             R_err_min = R_err;
             R_min = R;
