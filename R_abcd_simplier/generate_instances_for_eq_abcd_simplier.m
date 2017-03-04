@@ -1,13 +1,13 @@
-function eqi = generate_instances_for_eq_cgr( cfg, eq, known, unknown )
+function eqi = generate_instances_for_eq_abcd_simplier( cfg, eq, known, unknown )
 
-prime = cfg.prime;%32999
+prime = cfg.prime;
 
 t1 = randi(10,3,1);
 t3 = randi(10,3,1);
 
 flag = true;
 while flag
-    [R] = get_r_with_prime_cgr(prime);
+    [R] = get_r_with_prime_abcd_simplier(prime);
     if mod(det(R),prime) == 1
         flag = false;
     end
@@ -35,13 +35,14 @@ l1 = mod(get_lines_from_camera(camera1s, camera1e), prime);
 l2 = mod(get_lines_from_camera(camera2s, camera2e), prime);
 l3 = mod(get_lines_from_camera(camera3s, camera3e), prime);
 
-syms s1 s2 s3 real;
-R2 = get_r_cgr(s1,s2,s3);
+syms r11 r12 r13 r21 r22 r23 real;
+R2 = get_r_abcd_simplier(r11, r12, r13, r21, r22, r23);
 
 for j = 1:3
     eqi(j) = cross(R2*l3(:,j), R2'*l1(:,j))' * l2(:,j);
 end
+eqi(4) = [r11; r12; r13]' * [r21; r22; r23];
+eqi(5) = [r11; r12; r13]' * [r11; r12; r13] - 1;
+eqi(6) = [r21; r22; r23]' * [r21; r22; r23] - 1;
 
 end
-
-

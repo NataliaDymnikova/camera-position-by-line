@@ -72,7 +72,6 @@ R = get_r_abcd(a/n, b/n, c/n, d/n);
 
 end
 
-
 function [ R ] = r_cgr()
 
 s1 = randi(100);

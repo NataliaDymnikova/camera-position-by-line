@@ -1,11 +1,18 @@
 function eqi = generate_instances_for_eq_abcd( cfg, eq, known, unknown )
 
-prime = 32999;%cfg.prime;
+prime = cfg.prime;
 
 t1 = randi(10,3,1);
 t3 = randi(10,3,1);
 
-[R,a,b,c,d] = get_r_with_prime_abcd(prime);
+flag = true;
+while flag
+    [R] = get_r_with_prime_abcd(prime);
+    if mod(det(R),prime) == 1
+        flag = false;
+    end
+end
+
 for i = 1:3
     s = randi(100,3,1);
     e = randi(100,3,1);
