@@ -62,23 +62,26 @@ end
 
 
 function [ R ] = r_abcd()
-
-a = randi(100);
-b = randi(100);
-c = randi(100);
-d = randi(100);
-n = sqrt (a^2 + b^2 + c^2 + d^2);
-R = get_r_abcd(a/n, b/n, c/n, d/n);
-
+    a = randi(100);
+    b = randi(100);
+    c = randi(100);
+    d = randi(100);
+    n = sqrt (a^2 + b^2 + c^2 + d^2);
+    R = get_r_abcd(a/n, b/n, c/n, d/n);
 end
 
 function [ R ] = r_cgr()
+    s1 = randi(100);
+    s2 = randi(100);
+    s3 = randi(100);
 
-s1 = randi(100);
-s2 = randi(100);
-s3 = randi(100);
+    s = 1 + s1^2 + s2^2 + s3^2;
+    R = get_r_cgr(s1,s2,s3) / s;
+end
 
-s = 1 + s1^2 + s2^2 + s3^2;
-R = get_r_cgr(s1,s2,s3) / s;
 
+function [ R ] = r_known_cs()
+    c = rand(1);
+    s = (2*randi(2) - 3) * sqrt(1 - c^2);
+    R = [c,s,0; -s,c,0; 0,0,1];
 end
