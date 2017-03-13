@@ -3,9 +3,9 @@ f = 0;
 t = 0;
 c = 0;
 g = 0;
-for i = 1:500
+for i = 1:100
     [err] = check_r_solver_cgr();
-    if err > 0.0001
+    if err > 0.00001
         f = f + 1;
     else
         t = t + 1;

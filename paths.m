@@ -1,5 +1,6 @@
 addpath('R_known_vertical_homography');
 addpath('R_known_vertical_cs');
+addpath('R_known_vertical_cs_diff_r');
 addpath('R_cgr');
 addpath('R_abcd');
 addpath('R_abcd_simplier');

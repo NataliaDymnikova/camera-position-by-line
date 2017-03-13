@@ -9,6 +9,9 @@ camera3e = cell(1, length(nlevel));
 start_point = zeros(3, nlines);
 end_point = zeros(3, nlines);
 
+R1 = R(:,:,1);
+R2 = R(:,:,2);
+
 for j = 1:length(nlevel)
     noize = nlevel(j);
     camera1s{j} = zeros(2, nlines);
@@ -31,14 +34,14 @@ for j = 1:length(nlevel)
         start_point(:,lineInd) = s;
         end_point(:,lineInd) = e;
 
-        temp = R * s + t1;
+        temp = R1 * s + t1;
         camera1s{j}(:,lineInd) = temp(1:2)/temp(3)*fpix + randn(2,1) *  noize;
-        temp = R * e + t1;
+        temp = R1 * e + t1;
         camera1e{j}(:,lineInd) = temp(1:2)/temp(3)*fpix + randn(2,1) *  noize;
 
-        temp = R' * s + t3;
+        temp = R2 * s + t3;
         camera3s{j}(:,lineInd) = temp(1:2)/temp(3)*fpix + randn(2,1) *  noize;
-        temp = R' * e + t3;
+        temp = R2 * e + t3;
         camera3e{j}(:,lineInd) = temp(1:2)/temp(3)*fpix + randn(2,1) *  noize;
         %if (projects_to_image(camera1s, width, height) ...
         %            && projects_to_image(camera2e, width, height) ...
@@ -47,6 +50,7 @@ for j = 1:length(nlevel)
         %end
 
     end
+
 end
 
 end

@@ -3,10 +3,10 @@ function [R, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s,
 %focal length in pixels
 fpix = 1;
 %varying noise level
-nlevel = [0:0.5:4];
+nlevel = [0];
 noize = 4;
 %number of lines
-nlines = 10;
+nlines = 3;
 % camera's parameters
 width= 640;
 height= 480;       
@@ -16,6 +16,9 @@ height= 480;
 %R = r_abcd();
 %R = r_cgr();
 R = eval(get_r);
+if size(R,3) == 1
+    R(:,:,2) = R';
+end
 
 points = zeros(3, 2*nlines);
 
@@ -84,4 +87,9 @@ function [ R ] = r_known_cs()
     c = rand(1);
     s = (2*randi(2) - 3) * sqrt(1 - c^2);
     R = [c,s,0; -s,c,0; 0,0,1];
+end
+
+function [ R ] = r_known_cs_diff_r() 
+    R(:,:,1)  = r_known_cs();
+    R(:,:,2) = r_known_cs();
 end

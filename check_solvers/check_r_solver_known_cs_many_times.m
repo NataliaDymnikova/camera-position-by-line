@@ -3,9 +3,9 @@ f = 0;
 t = 0;
 c = 0;
 g = 0;
-for i = 1:2000
+for i = 1:1000
     [err] = check_r_solver_known_cs();
-    if err > 0.000001
+    if err > 0.00001
         f = f + 1;
     else
         t = t + 1;
@@ -26,5 +26,6 @@ for i = 1:2000
 end
 
 percent = t / (f+t);
+g = g / (f+t);
 end
 

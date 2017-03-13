@@ -19,6 +19,7 @@ function [R_err, k] = check_r_solver_abcd_simplier( )
         return
     end
     
+    R = R(:,:,1);
     for i = 1:length(r11)
         R_test = get_r_abcd_simplier(r11(i), r12(i), r13(i), r21(i), r22(i), r23(i));
         [ R_err, t_err ] = test( R, t1, R_test, t1);
