@@ -4,7 +4,7 @@ function [eqs, known, unknown, kngroups, cfg, algB]  = get_r_equations_known_cs(
     l2 = gbs_Matrix('l2_%d%d', 3, 1, 'real');    
     l3 = gbs_Matrix('l3_%d%d', 3, 1, 'real');    
 
-    syms c s real;
+    syms c s real;z
 
     R = get_r_known_cs(c,s);
 

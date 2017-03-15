@@ -1,4 +1,4 @@
-function [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = cameras_and_lines_in_cube()
+function [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = cameras_and_lines_in_cube_small_angle()
 
 %focal length in pixels
 fpix = 1;
@@ -34,7 +34,7 @@ function [R,t] = get_r_and_t()
     while flag
         i = i + 1;
 
-        R = make_r.r();
+        R = make_r.r_abcd();
         temp = R(3,:);
         M = min(8./abs(temp));
         m = max(6./abs(temp));
