@@ -1,6 +1,6 @@
 function [ R_err ] = check_solver_cube_abcd_equal_r(  )
 
-    [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = cameras_and_lines_in_cube_small_angle_equal('r_abcd');
+    [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = cameras_and_lines_in_cube_small_angle_equal();
 
     l1 = get_lines_from_camera(camera1s{1}, camera1e{1});
     l2 = get_lines_from_camera(camera2s{1}, camera2e{1});
