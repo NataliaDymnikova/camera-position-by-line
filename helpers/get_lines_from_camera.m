@@ -1,6 +1,6 @@
 function [ l ] = get_lines_from_camera(start, endl)
     l = [];
-    for i = 1:3
+    for i = 1:length(start)
         x1 = start(2*i-1);
         y1 = start(2*i);
         x2 = endl(2*i-1);

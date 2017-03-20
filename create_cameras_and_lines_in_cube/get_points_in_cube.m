@@ -19,8 +19,8 @@ for j = 1:length(nlevel)
     camera3e{j} = zeros(2, nlines);
 
     for lineInd = 1:nlines
-        s = rand(3,1) * 2 - 1;
-        e = rand(3,1) * 2 - 1;
+        s = rand(3,1) * 4 - 2;
+        e = rand(3,1) * 4 - 2;
         
         start_point(:,lineInd) = s;
         end_point(:,lineInd) = e;

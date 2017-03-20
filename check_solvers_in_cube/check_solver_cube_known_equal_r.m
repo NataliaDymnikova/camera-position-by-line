@@ -19,7 +19,7 @@ function [ R_err ] = check_solver_cube_known_equal_r( )
         l3(:,i) = R3_yz' * l3(:,i);
     end
 
-    [c, s] = solver_get_r_equations_known_cs0(l1, l2, l3);
+    [c, s] = solver_get_r_equations_known_cs1(l1, l2, l3);
 
     R_err_min = inf;
    

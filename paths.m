@@ -4,6 +4,7 @@ addpath('R_known_vertical_cs_diff_r');
 addpath('R_cgr');
 addpath('R_abcd');
 addpath('R_abcd_simplier');
+addpath('R_small');
 
 addpath('create_cameras_and_lines');
 addpath('create_cameras_and_lines_in_cube');

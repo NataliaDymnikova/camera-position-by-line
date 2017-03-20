@@ -37,8 +37,8 @@ function [R,t] = get_r_and_t()
 
         R = make_r.r_abcd();
         temp = R(3,:);
-        M = min(8./abs(temp));
-        m = max(6./abs(temp));
+        M = min(6./abs(temp));
+        m = max(4./abs(temp));
         if m < M
             k = (m + M) / 2.;
             t = -(temp * k)';

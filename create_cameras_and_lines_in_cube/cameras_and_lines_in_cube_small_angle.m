@@ -8,9 +8,9 @@ noize = 4;
 %number of lines
 nlines = 3;
 
-[R1,t1] = get_r_and_t();
 [R2,t2] = get_r_and_t();
-[R3,t3] = get_r_and_t();
+[R1, t1] = get_r_and_t_small(R2);
+[R3, t3] = get_r_and_t_small(R2);
 
 [start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e] = get_points_in_cube(R1,R2,R3,t1,t2,t3,fpix, nlevel, nlines);
 
@@ -36,8 +36,8 @@ function [R,t] = get_r_and_t()
 
         R = make_r.r_abcd();
         temp = R(3,:);
-        M = min(8./abs(temp));
-        m = max(6./abs(temp));
+        M = min(6./abs(temp));
+        m = max(4./abs(temp));
         if m < M
             k = (m + M) / 2.;
             t = -(temp * k)';
@@ -45,3 +45,23 @@ function [R,t] = get_r_and_t()
         end
     end
 end
+
+function [R,t] = get_r_and_t_small(R2)
+    flag = true;
+    i = 0;
+    while flag
+        i = i + 1;
+
+        R = make_r.r_small();
+        R = R * R2;
+        temp = R(3,:);
+        M = min(6./abs(temp));
+        m = max(4./abs(temp));
+        if m < M
+            k = (m + M) / 2.;
+            t = -(temp * k)';
+            flag = false;
+        end
+    end
+ 
+ end
