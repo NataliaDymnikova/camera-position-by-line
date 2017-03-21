@@ -6,7 +6,7 @@ function [ R_err ] = check_solver_cube_small_diff_r( )
     l2 = get_lines_from_camera(camera2s{1}, camera2e{1});
     l3 = get_lines_from_camera(camera3s{1}, camera3e{1});
 
-    [r11,r12,r13,r21,r22,r23] = solver_get_r_equations_small0(l1, l2, l3);
+    [r11,r12,r13,r21,r22,r23] = solver_get_r_equations_small1(l1, l2, l3);
 
     R_err_min = inf;
    

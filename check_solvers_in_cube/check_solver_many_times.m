@@ -21,22 +21,22 @@ for i = 1:100
         p5 = p5 + 1;
         p10 = p10 + 1;
     else
-        if err < 0.0000000001
+        if err < 1.e-10
             p3 = p3 + 1;
             p4 = p4 + 1;
             p5 = p5 + 1;
             p10 = p10 + 1;
         else
-            if err < 0.00001
+            if err < 1.e-5
                 p3 = p3 + 1;
                 p4 = p4 + 1;
                 p5 = p5 + 1;
             else
-                if err < 0.0001
+                if err < 1.e-4
                     p3 = p3 + 1;
                     p4 = p4 + 1;
                 else
-                    if err < 0.001
+                    if err < 1.e-3
                         p3 = p3 + 1;
                     end
                 end

@@ -8,9 +8,7 @@ noize = 1;
 %number of lines
 nlines = 6;
 
-[R2,t2] = get_r_and_t();
-[R1, t1] = get_r_and_t_small(R2);
-[R3, t3] = get_r_and_t_small(R2);
+[R1, R2, R3, t1, t2, t3] = get_r_and_t();
 
 [start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e] = get_points_in_cube(R1,R2,R3,t1,t2,t3,fpix, nlevel, nlines);
 
@@ -28,20 +26,28 @@ function [ x ] = get_random(min, max)
     x = sign * (min + (max-min) * rand());
 end
 
-function [R,t] = get_r_and_t() 
+function [R1, R2, R3, t1, t2, t3] = get_r_and_t() 
     flag = true;
     i = 0;
     while flag
         i = i + 1;
 
-        R = make_r.r_abcd();
-        temp = R(3,:);
+        R2 = make_r.r_abcd();
+        temp = R2(3,:);
         M = min(6./abs(temp));
         m = max(4./abs(temp));
         if m < M
             k = (m + M) / 2.;
-            t = -(temp * k)';
+            t2 = -(temp * k)';
             flag = false;
+            
+            [R1, t1] = get_r_and_t_small(R2);
+            [R3, t3] = get_r_and_t_small(R2);
+
+            if isempty(R1) || isempty(R3)
+                flag = true;
+            end
+            
         end
     end
 end
@@ -49,7 +55,7 @@ end
 function [R,t] = get_r_and_t_small(R2)
     flag = true;
     i = 0;
-    while flag
+    while flag && i < 1000
         i = i + 1;
 
         R = make_r.r_small();
@@ -64,4 +70,8 @@ function [R,t] = get_r_and_t_small(R2)
         end
     end
  
+    if i == 1000
+        R = [];
+        t = [];
+    end
  end
