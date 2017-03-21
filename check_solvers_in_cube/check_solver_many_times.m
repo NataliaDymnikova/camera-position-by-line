@@ -3,7 +3,7 @@ function [p0,p10,p5,p4,p3] = check_solver_many_times( checker )
 %            checker                  --  0  ^-10  ^-5  ^-4  ^-3
 % 'check_solver_cube_known_diff_r()'  -- 32%  32%  51%  82%  95%
 % 'check_solver_cube_abcd_equal_r()'  -- 55%  55%  55%  56%  70%
-%
+% 'check_solver_cube_small_diff_r()'  -- 100% 100% 100% 100% 100%
 
 
 p10 = 0;

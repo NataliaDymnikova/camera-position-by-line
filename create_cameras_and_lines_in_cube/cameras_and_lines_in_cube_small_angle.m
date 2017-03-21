@@ -4,9 +4,9 @@ function [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e,
 fpix = 1;
 %varying noise level
 nlevel = [0];
-noize = 4;
+noize = 1;
 %number of lines
-nlines = 3;
+nlines = 6;
 
 [R2,t2] = get_r_and_t();
 [R1, t1] = get_r_and_t_small(R2);
