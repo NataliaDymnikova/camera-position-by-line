@@ -6,7 +6,7 @@ fpix = 1;
 nlevel = [0];
 noize = 4;
 %number of lines
-nlines = 3;
+nlines = 6;
 
 [R1,t1] = get_r_and_t();
 [R2,t2] = get_r_and_t();
@@ -16,7 +16,7 @@ nlines = 3;
 
 t1 = t1 - t2;
 t3 = t3 - t2;
-t2 = 0;
+t2 = [0;0;0];
 
 R1 = R1 * R2';
 R3 = R3 * R2';

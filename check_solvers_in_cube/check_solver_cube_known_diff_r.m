@@ -29,8 +29,8 @@ function [ R_err ] = check_solver_cube_known_diff_r( )
     end
     
     for i = 1:length(c1)
-        R_test1 = get_r_known_cs(c1(i), s1(i));
-        R_test2 = get_r_known_cs(c2(i), s2(i));
+        R_test1 = get_r_known_cs_diff_r(c1(i), s1(i));
+        R_test2 = get_r_known_cs_diff_r(c2(i), s2(i));
         [ R_err1, t_err ] = test( R2_x' * R1_x, t1, R_test1, t1);
         [ R_err2, t_err ] = test( R2_x' * R3_x, t1, R_test2, t1);
         

@@ -2,7 +2,7 @@ function eqi = generate_instances_for_eq_vanishing( cfg, eq, known, unknown )
 
 prime = cfg.prime;
 
-[R1] = get_r_with_prime_vqnishing(prime);
+[R1] = get_r_with_prime_vanishing(prime);
 [R3] = get_r_with_prime_vanishing(prime);
 
 t1 = R1(3,:);
@@ -34,10 +34,11 @@ syms r11 r12 r13 r21 r22 r23 real;
 R1 = get_r_vanishing(t1(1),t1(2),t1(3), r11,r12,r13);
 R3 = get_r_vanishing(t3(1),t3(2),t3(3), r21,r22,r23);
 
-for j = 1:6
+for j = 1:4
     eqi(j) = mod(cross(mod(R3'*l3(:,j),prime), mod(R1'*l1(:,j),prime))' * l2(:,j),prime);
 end
-
+eqi(5) = mod(det(R1),prime - 1);
+eqi(6) = mod(det(R3),prime - 1);
 end
 
 
