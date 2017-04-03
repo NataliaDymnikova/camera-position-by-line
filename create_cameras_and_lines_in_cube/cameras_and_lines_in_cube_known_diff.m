@@ -1,12 +1,14 @@
-function [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = cameras_and_lines_in_cube()
+function [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e, fpix ] = cameras_and_lines_in_cube_known_diff()
 
 %focal length in pixels
-fpix = 1;
+fpix = 1e10;
 %varying noise level
-nlevel = [0];
-noize = 4;
+nlevel = [0, 1., 2.];
 %number of lines
 nlines = 6;
+
+nlevel = nlevel / fpix;
+fpix = 1;
 
 [R1,t1] = get_r_and_t();
 [R2,t2] = get_r_and_t();

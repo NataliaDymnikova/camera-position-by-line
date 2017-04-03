@@ -1,12 +1,14 @@
-function [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = cameras_and_lines_in_cube_small_angle_equal()
+function [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e, fpix ] = cameras_and_lines_in_cube_known_equal()
 
 %focal length in pixels
-fpix = 1;
+fpix = 1e10;
 %varying noise level
-nlevel = [0];
-noize = 4;
+nlevel = [0, 1., 2.];
 %number of lines
 nlines = 3;
+
+nlevel = nlevel / fpix;
+fpix = 1;
 
 [R1,t1] = get_r_and_t();
 [R2,t2] = get_r_and_t();
@@ -35,7 +37,7 @@ function [R,t] = get_r_and_t()
     while flag
         i = i + 1;
 
-        R = make_r.r_abcd();
+        R = make_r.r();
         temp = R(3,:);
         M = min(6./abs(temp));
         m = max(4./abs(temp));

@@ -1,6 +1,6 @@
 function [ R_err ] = check_solver_cube_known_equal_r( )
 
-    [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = cameras_and_lines_in_cube_equal();
+    [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = cameras_and_lines_in_cube_known_equal();
 
     R1_x = make_r.r_known(R1);
     R1_yz = R1 * R1_x';
