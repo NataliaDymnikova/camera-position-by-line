@@ -1,7 +1,7 @@
 function [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e, fpix ] = cameras_and_lines_in_cube_small_angle_diff()
 
 %focal length in pixels
-fpix = 5e5;
+fpix = 1e3;
 %varying noise level
 nlevel = [0, 1., 2.];
 %number of lines

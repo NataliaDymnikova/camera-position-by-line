@@ -5,10 +5,11 @@ function [p0,p10,p5,p4,p3] = check_solver_many_times( checker )
 % 'check_solver_cube_abcd_equal_r(1)'  -- 55%  55%  55%  56%  70%
 % 'check_solver_cube_small_diff_r(1)'  -- 99%  99%  99%  99%  99%
 % 
-% 'check_solver_cube_known_diff_r(2)'  -- 
-% 'check_solver_cube_abcd_equal_r(2)'  -- 
-% 'check_solver_cube_small_diff_r(2)'  -- 
+% 'check_solver_cube_known_diff_r(2)'  -- 0
+% 'check_solver_cube_abcd_equal_r(2)'  -- 12%
+% 'check_solver_cube_small_diff_r(2)'  -- 68%
 % 
+% 'check_solver_cube_small_diff_r(3)'  -- 64%
 
 
 p10 = 0;
