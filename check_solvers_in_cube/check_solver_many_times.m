@@ -1,4 +1,4 @@
-function [p0,p10,p5,p4,p3] = check_solver_many_times( checker )
+function [p0,p10,p5,p4,p3] = check_solver_many_times( R )
 
 %            checker                   --  0  ^-10  ^-5  ^-4  ^-3
 % 'check_solver_cube_known_diff_r(1)'  -- 32%  32%  51%  82%  95%
@@ -7,9 +7,9 @@ function [p0,p10,p5,p4,p3] = check_solver_many_times( checker )
 % 
 % 'check_solver_cube_known_diff_r(2)'  -- 0
 % 'check_solver_cube_abcd_equal_r(2)'  -- 12%
-% 'check_solver_cube_small_diff_r(2)'  -- 68%
+% 'check_solver_cube_small_diff_r(2)'  -- 70%,  on plane 73
 % 
-% 'check_solver_cube_small_diff_r(3)'  -- 64%
+% 'check_solver_cube_small_diff_r(3)'  -- 64%, on plane 68
 
 
 p10 = 0;
@@ -18,8 +18,8 @@ p4 = 0;
 p3 = 0;
 p0 = 0;
 
-for i = 1:100
-    [err] = eval(checker);
+for i = 1:1000
+    [err] = R.checker();
     if err == 0
         p0 = p0 + 1;
         p3 = p3 + 1;

@@ -1,6 +1,6 @@
-function [ isOk ] = check_creation_lines_in_cube( )
+function [ isOk ] = check_creation_lines_in_cube( points )
 
-[ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e, fpix ] = cameras_and_lines_in_cube_known_diff();
+[ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e, fpix ] = cameras_and_lines_known_diff(points);
 fpix = 1;
 
 i = 1;

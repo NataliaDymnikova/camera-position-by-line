@@ -1,7 +1,8 @@
-function [ R_err ] = check_solver_cube_abcd_equal_r( i )
+function [ R_err ] = check_solver_cube_abcd_equal_r( R )
 
-    [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = cameras_and_lines_in_cube_abcd_equal();
+    [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = R.get_lines();
 
+    i = R.noize;
     l1 = get_lines_from_camera(camera1s{i}, camera1e{i});
     l2 = get_lines_from_camera(camera2s{i}, camera2e{i});
     l3 = get_lines_from_camera(camera3s{i}, camera3e{i});

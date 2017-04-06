@@ -1,6 +1,6 @@
-function [ R_err ] = check_solver_cube_known_diff_r( i )
+function [ R_err ] = check_solver_cube_known_diff_r( R )
 
-    [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = cameras_and_lines_in_cube_known_diff();
+    [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e ] = R.get_lines();
 
     R1_x = make_r.r_known(R1);
     R1_yz = R1 * R1_x';
@@ -9,6 +9,7 @@ function [ R_err ] = check_solver_cube_known_diff_r( i )
     R3_x = make_r.r_known(R3);
     R3_yz = R3 * R3_x';
     
+    i = R.noize;
     l1 = get_lines_from_camera(camera1s{i}, camera1e{i});
     l2 = get_lines_from_camera(camera2s{i}, camera2e{i});
     l3 = get_lines_from_camera(camera3s{i}, camera3e{i});
@@ -19,7 +20,7 @@ function [ R_err ] = check_solver_cube_known_diff_r( i )
         l3(:,i) = R3_yz' * l3(:,i);
     end
     
-    [c1, s1, c2, s2] = solver_get_r_equations_known_cs_diff_r_equal(l1, l2, l3);
+    [c1, s1, c2, s2] = solver_get_r_equations_known_cs_diff_r1(l1, l2, l3);
 
     R_err_min = inf;
    

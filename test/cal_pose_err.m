@@ -51,7 +51,11 @@ function Q = Matrix2Quaternion(R)
     twosinthetav = [R(3,2)-R(2,3), R(1,3)-R(3,1), R(2,1)-R(1,2)]';
     twosintheta = axis'*twosinthetav;
     
-    theta = atan2(twosintheta, twocostheta);
+    if isreal(twosintheta) && isreal(twocostheta)
+        theta = atan2(twosintheta, twocostheta);
+    else
+       theta = Inf; 
+    end
     
     Q = [cos(theta/2); axis*sin(theta/2)];
 end

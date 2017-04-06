@@ -1,4 +1,4 @@
-function [start_point, end_point, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e] = get_points_on_plane(R1,R2, R3,t1,t2,t3, nlevel, nlines)
+function [start_point, end_point, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e] = get_points(R1,R2, R3,t1,t2,t3, nlevel, nlines, points_func)
 
 camera1s = cell(length(nlevel),1);
 camera1e = cell(length(nlevel),1);
@@ -19,22 +19,10 @@ for j = 1:length(nlevel)
     camera3e{j} = zeros(2, nlines);
 end;
 
-% plane Ax+By+Cz+D=0:
-A = randi(100);
-B = randi(100);
-C = randi([A+B, 2*(A+B)],1,1);
-D = randi([-2*(C-A-B), 2*(C-A-B)],1,1);
-
 for lineInd = 1:nlines
-    sx = rand(1,1) - 2;
-    sy = rand(1,1) - 2;
-    sz = -(D+A*sx+B*sy)/C;
-    s = [sx;sy;sz];
-    
-    ex = rand(1,1) + 1;
-    ey = rand(1,1) + 1;
-    ez = -(D+A*ex+B*ey)/C;
-    e = [ex;ey;ez];
+%    s = rand(3,1) - 2;
+%    e = rand(3,1) + 1;
+    [s,e] = points_func();
     
     start_point(:,lineInd) = s;
     end_point(:,lineInd) = e;
@@ -57,5 +45,4 @@ for lineInd = 1:nlines
         temp = R3 * e + t3;
         camera3e{j}(:,lineInd) = temp(1:2)/temp(3) + randn(2,1) *  noize;
     end
-end
 end

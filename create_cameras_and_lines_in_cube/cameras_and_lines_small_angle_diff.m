@@ -1,4 +1,4 @@
-function [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e, fpix ] = cameras_and_lines_in_cube_small_angle_diff()
+function [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e, fpix ] = cameras_and_lines_small_angle_diff(points_func)
 
 %focal length in pixels
 fpix = 1e3;
@@ -12,7 +12,7 @@ fpix = 1;
 
 [R1, R2, R3, t1, t2, t3] = get_r_and_t();
 
-[start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e] = get_points_in_cube(R1,R2,R3,t1,t2,t3,fpix, nlevel, nlines);
+[start_points, end_points, camera1s, camera1e, camera2s, camera2e, camera3s, camera3e] = get_points(R1,R2,R3,t1,t2,t3, nlevel, nlines, points_func);
 
 t1 = t1 - t2;
 t3 = t3 - t2;
