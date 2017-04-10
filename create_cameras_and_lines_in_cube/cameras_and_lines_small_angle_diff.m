@@ -3,7 +3,7 @@ function [ R1, R2, R3, t1, t2, t3, start_points, end_points, camera1s, camera1e,
 %focal length in pixels
 fpix = 1e3;
 %varying noise level
-nlevel = [0, 1., 2.];
+nlevel = [0:0.1:3];
 %number of lines
 nlines = 6;
 
