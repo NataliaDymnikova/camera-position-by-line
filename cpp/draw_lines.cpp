@@ -20,6 +20,8 @@ int draw_lines()
     char *directory = new char[1000];
     cin >> directory;
 
+    VideoWriter out_capture(string(directory)+"video.avi", CV_FOURCC('M','J','P','G'), 30, Size(640,480));
+
     DIR *dir;
     struct dirent *ent;
     vector<string> files;
@@ -75,8 +77,15 @@ int draw_lines()
             /* show lines on image */
             imshow("Lines", output);
             waitKey(3);
+
+            if (output.rows == 480 && output.cols == 640)
+                out_capture.write(output);
         }
+        out_capture.release();
         closedir (dir);
     }
+
+    delete(dir);
+    delete(directory);
     return 1;
 }

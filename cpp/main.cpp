@@ -15,4 +15,6 @@ int main() {
     } else if (i == 1) {
         draw_lines();
     }
+
+    return 1;
 }
