@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 #include <opencv2/line_descriptor.hpp>
 #include <opencv2/features2d.hpp>
@@ -13,17 +14,27 @@ using namespace std;
 
 vector<float**> getMatches(string basic_string, string basicString, string file3);
 float* get_line(KeyLine line);
+std::vector<DMatch> sort_by_length(std::vector<DMatch> vector,std::vector<KeyLine> keylines);
 
 int main() {
     cout << "Directories should be with \\ in the end:\n";
 
 /*
- * C:\MyProga\diploma\camera-position-by-line\cpp\Real_tests\rgbd_dataset_freiburg1_floor\rgb\
+    C:\MyProga\diploma\camera-position-by-line\cpp\Real_tests\rgbd_dataset_freiburg1_floor\rgb\
     C:\MyProga\diploma\camera-position-by-line\cpp\floor\
-    */
-/*    C:\MyProga\diploma\camera-position-by-line\cpp\Real_tests\rgbd_dataset_freiburg3_cabinet\rgb\
+*/
+/*
+    C:\MyProga\diploma\camera-position-by-line\cpp\Real_tests\rgbd_dataset_freiburg3_cabinet\rgb\
     C:\MyProga\diploma\camera-position-by-line\cpp\cabinet\
-    */
+*/
+/*
+    C:\MyProga\diploma\camera-position-by-line\cpp\Real_tests\rgbd_dataset_freiburg3_large_cabinet\rgb\
+    C:\MyProga\diploma\camera-position-by-line\cpp\large\
+*/
+/*
+    C:\MyProga\diploma\camera-position-by-line\cpp\Real_tests\rgbd_dataset_freiburg3_structure_notexture_far\rgb\
+    C:\MyProga\diploma\camera-position-by-line\cpp\far\
+*/
 
     cout << "Directory with images:\n";
     char *directory = new char[1000];
@@ -47,7 +58,7 @@ int main() {
 
         mkdir(name);
 
-        int len = (int) min((int) files.size(), 100);
+        int len = (int) files.size();
         for (int i = 0; i < len - 2; i++){
             string file1 = files[i];
             string file2 = files[i+1];
@@ -114,6 +125,8 @@ vector<float**> getMatches(string image_path1, string image_path2, string image_
     bdm->match( descr2, descr1, matches1 );
     bdm->match( descr2, descr3, matches2 );
 
+//    matches1 = sort_by_length(matches1, keylines2);
+
     vector<float**> matches;
     for (int i = 0; i < matches1.size(); i++) {
         for (int j = 0; j < matches2.size(); j++) {
@@ -126,6 +139,17 @@ vector<float**> getMatches(string image_path1, string image_path2, string image_
             }
         }
     }
+    return matches;
+}
+
+std::vector<DMatch> sort_by_length(std::vector<DMatch> matches, std::vector<KeyLine> keylines){
+    std::vector<DMatch> res;
+    sort(matches.begin(), matches.end(),
+         [keylines](DMatch a, DMatch b) -> bool {
+            return keylines[b.queryIdx].lineLength < keylines[a.queryIdx].lineLength;
+        }
+    );
+
     return matches;
 }
 
