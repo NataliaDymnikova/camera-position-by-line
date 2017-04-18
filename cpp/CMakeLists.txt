@@ -9,7 +9,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(test_cv main.cpp)
+add_executable(test_cv main.cpp draw_lines.h match_lines.h draw_lines.cpp match_lines.cpp)
 
 # add libs you need
 set(OpenCV_LIBS opencv_calib3d opencv_core opencv_features2d opencv_flann
