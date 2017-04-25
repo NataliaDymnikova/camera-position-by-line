@@ -18,8 +18,9 @@ p4 = 0;
 p3 = 0;
 p0 = 0;
 
-for i = 1:1000
-    [err] = R.checker();
+for i = 1:10
+    [err, terr] = R.checker();
+    print(terr);
     if err == 0
         p0 = p0 + 1;
         p3 = p3 + 1;

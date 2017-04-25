@@ -8,5 +8,7 @@ addpath('create_cameras_and_lines_in_cube');
 
 addpath('check_solvers_in_cube');
 
+addpath('find_t');
+
 addpath('test');
 addpath(genpath('helpers'));

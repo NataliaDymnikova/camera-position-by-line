@@ -20,8 +20,10 @@ function [ best_lines, R_res1, R_res3, sum_sq ] = ransac( lines, solver, num_ite
             l3 = lines(7:9, j);
 
             k = (cross(R3'*l3(:,1), R1'*l1(:,1))' * l2(:,1)) ^ 2;
+            %tens = l2' - (l1'*(R1(:,1)*t3' - t1*R3(:,1)')*l3 + l1'*(R1(:,2)*t3' - t1*R3(:,2)')*l3+ l1'*(R1(:,3)*t3' - t1*R3(:,3)')*l3);
+            %k = sum(abs(tens));
             if k < 1e+12
-                distance = distance + (cross(R3'*l3(:,1), R1'*l1(:,1))' * l2(:,1)) ^ 2;
+                distance = distance + k;
                 good = good + 1;
             end
             

@@ -6,5 +6,7 @@ addpath('classes');
 
 addpath('Real_tests');
 
+addpath('find_t');
+
 addpath('test');
 addpath(genpath('helpers'));
