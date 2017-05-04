@@ -20,9 +20,7 @@ function [ R_err, t_err ] = check_solver_cube_small_diff_r( R )
         R_test1 = get_r_small(r11(i), r12(i), r13(i));
         R_test3 = get_r_small(r21(i), r22(i), r23(i));
         
-        [t11, t12, t13, t31, t32, t33] = solver_create_eq_find_t(R_test1, R_test3, l1, l2, l3);
-        t_test1 = [t11;t12;t13];
-        t_test3 = [t31;t32;t33];
+        [t_test1, t_test3] = find_t(R_test1, R_test3, l1, l2, l3);
             
         [ R_err1, t_err1 ] = test(R1, t1, R_test1, t_test1);
         [ R_err3, t_err2 ] = test(R3, t3, R_test3, t_test3);
