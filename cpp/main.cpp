@@ -16,5 +16,5 @@ int main() {
         draw_lines();
     }
 
-    return 1;
+    return 0;
 }

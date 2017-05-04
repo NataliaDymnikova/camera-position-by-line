@@ -33,17 +33,17 @@ int match_lines() {
     C:\MyProga\diploma\camera-position-by-line\cpp\Real_tests\rgbd_dataset_freiburg3_large_cabinet\rgb\
     C:\MyProga\diploma\camera-position-by-line\cpp\large\
 */
-/*
-    C:\MyProga\diploma\camera-position-by-line\cpp\Real_tests\rgbd_dataset_freiburg3_structure_notexture_far\rgb\
-    C:\MyProga\diploma\camera-position-by-line\cpp\far\
-*/
 
     cout << "Directory with images:\n";
     char *directory = new char[1000];
     cin >> directory;
     cout << "Name of directory for result:\n";
-    char *name = new char[1000];
+    string name;
     cin >> name;
+
+    int step = 1;
+
+    name = name + to_string(step) + "\\";
 
     DIR *dir;
     struct dirent *ent;
@@ -58,13 +58,13 @@ int match_lines() {
             files.push_back(string(ent->d_name));
         }
 
-        mkdir(name);
+        mkdir(name.data());
 
         int len = (int) files.size();
-        for (int i = 0; i < len - 2; i++){
+        for (int i = 0; i < len - 2*step-1; i++){
             string file1 = files[i];
-            string file2 = files[i+1];
-            string file3 = files[i+2];
+            string file2 = files[i+step];
+            string file3 = files[i+2*step];
 
             vector<float**> matches = getMatches(directory+file1, directory+file2, directory+file3);
 
@@ -88,8 +88,9 @@ int match_lines() {
     }
 
     delete (directory);
-    delete (name);
     delete (dir);
+
+    return 0;
 }
 
 vector<float**> getMatches(string image_path1, string image_path2, string image_path3) {
