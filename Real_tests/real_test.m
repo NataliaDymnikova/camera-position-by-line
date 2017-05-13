@@ -1,18 +1,19 @@
-function [ R_err ] = real_test( file, i )
+function [ R_err ] = real_test( file, i, step )
 	% './cpp/floor/', 1..97
-    ffile = fopen(file+string(i-1),'r');
+    ffile_lines = fopen(file+string(step)+'/'+string(i-1),'r');
     ffile_res = fopen(file+string('groundtruth.txt'),'r');
     % time t1 t2 t3 a b c d
     Res = fscanf(ffile_res, '%d.%d %f %f %f %f %f %f %f', [9, Inf]);
     % l1,l2,l3, R1,R2,R3
     R1 = get_r_abcd(Res(6,i), Res(7,i), Res(8,i), Res(9,i));
-    R2 = get_r_abcd(Res(6,i+1), Res(7,i+1), Res(8,i+1), Res(9,i+1));
-    R3 = get_r_abcd(Res(6,i+2), Res(7,i+2), Res(8,i+2), Res(9,i+2));
+    R2 = get_r_abcd(Res(6,i+1*step), Res(7,i+1*step), Res(8,i+1*step), Res(9,i+1*step));
+    R3 = get_r_abcd(Res(6,i+2*step), Res(7,i+2*step), Res(8,i+2*step), Res(9,i+2*step));
     t1 = [1;1;1];
     
-    lines = fscanf(ffile, '%f %f %f %f %f %f %f %f %f', [9, Inf]);
+    lines = fscanf(ffile_lines, '%f %f %f %f %f %f %f %f %f', [9, Inf]);
     if length(lines(1,:)) < 6
         R_err = Inf;
+        disp('Inf');
         fclose('all');
         return
     end
@@ -20,7 +21,7 @@ function [ R_err ] = real_test( file, i )
     R1 = R1*R2';
     R3 = R3*R2';
     
-    num_iter = 5;
+    num_iter = 20;
     num_ress = 6;
     [ best_lines, R_res1, R_res3, sum_sq ] = ransac( lines, @(l1,l2,l3) (solver(l1,l2,l3,R1,R3,t1)), num_iter, num_ress);
     
@@ -48,6 +49,10 @@ function [R1res, R3res] = solver(l1, l2, l3, R1, R3, t1)
     for i = 1:length(r11)
         R_test1 = get_r_small(r11(i), r12(i), r13(i));
         R_test3 = get_r_small(r21(i), r22(i), r23(i));
+        
+        R_test1 = build_R(R_test1);
+        R_test3 = build_R(R_test3);
+        
         [ R_err1, t_err ] = test(R1, t1, R_test1, t1);
         [ R_err3, t_err ] = test(R3, t1, R_test3, t1);
         
@@ -59,4 +64,11 @@ function [R1res, R3res] = solver(l1, l2, l3, R1, R3, t1)
             R3res = R_test3;
         end
     end
+end
+
+function [ R ] = build_R(R_test1)
+    [U,S,V] = svd(R_test1);
+    R = U*V';
+
+    
 end

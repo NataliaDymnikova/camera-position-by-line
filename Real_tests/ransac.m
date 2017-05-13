@@ -12,6 +12,9 @@ function [ best_lines, R_res1, R_res3, sum_sq ] = ransac( lines, solver, num_ite
         l3 = lines(7:9, idx);
 
         [R1, R3] = solver(l1,l2,l3);
+        if abs(R1(1,2)) > 1 || abs(R3(1,2)) > 1
+            continue;
+        end
         distance = 0;
         good = 0;
         for j = 1:number
@@ -22,7 +25,7 @@ function [ best_lines, R_res1, R_res3, sum_sq ] = ransac( lines, solver, num_ite
             k = (cross(R3'*l3(:,1), R1'*l1(:,1))' * l2(:,1)) ^ 2;
             %tens = l2' - (l1'*(R1(:,1)*t3' - t1*R3(:,1)')*l3 + l1'*(R1(:,2)*t3' - t1*R3(:,2)')*l3+ l1'*(R1(:,3)*t3' - t1*R3(:,3)')*l3);
             %k = sum(abs(tens));
-            if k < 1e+12
+            if k < 1e+14
                 distance = distance + k;
                 good = good + 1;
             end

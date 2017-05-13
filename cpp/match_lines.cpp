@@ -18,6 +18,8 @@ vector<float**> getMatches(string basic_string, string basicString, string file3
 float* get_line(KeyLine line);
 std::vector<DMatch> sort_by_length(std::vector<DMatch> vector,std::vector<KeyLine> keylines);
 
+vector<DMatch> filter_by_length(vector<DMatch> matches, vector<KeyLine> keylines);
+
 int match_lines() {
     cout << "Directories should be with \\ in the end:\n";
 
@@ -129,6 +131,7 @@ vector<float**> getMatches(string image_path1, string image_path2, string image_
     bdm->match( descr2, descr3, matches2 );
 
 //    matches1 = sort_by_length(matches1, keylines2);
+    matches1 = filter_by_length(matches1, keylines2);
 
     vector<float**> matches;
     for (int i = 0; i < matches1.size(); i++) {
@@ -143,6 +146,17 @@ vector<float**> getMatches(string image_path1, string image_path2, string image_
         }
     }
     return matches;
+}
+
+std::vector<DMatch> filter_by_length(std::vector<DMatch> matches, std::vector<KeyLine> keylines) {
+    std::vector<DMatch> res;
+    for (DMatch i : matches) {
+        if (keylines[i.queryIdx].lineLength > 15)
+            res.push_back(i);
+    }
+
+    return res;
+
 }
 
 std::vector<DMatch> sort_by_length(std::vector<DMatch> matches, std::vector<KeyLine> keylines){

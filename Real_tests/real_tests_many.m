@@ -4,7 +4,13 @@ function [avg, c, p0, p3] = real_tests_many(file) % 100                     1000
 % './cpp/cabinet/', 1000 -- 0.5157 48% 23% 52% |--| 0.4307 100% 49% 0%  |--| 0.5797 99%  38% 1%
 % './cpp/large/',   1000 -- 0.5612 49% 23% 51% |--| 0.5881 100% 39% 0%  |--| 0.6002 100% 38% 0%
 
-num = 100;
+% known vertival direction
+%    name           num  -- avg    c    p0  inf |--| avg    c    p0  inf |--|
+% './cpp/floor/',   1000 -- 0.5345 100% 38%  0% |--| 0.6831 956% 31% 0%  |--|
+
+step = 1;
+
+num = min(1000 * step, 1000);
 
 inf = 0;
 avg = 0;
@@ -21,7 +27,8 @@ for i = 1:num
         disp([num2str(i), ' ', num2str(p0), ' ', num2str(inf)]);
     end
 
-    err = real_test(file, i);
+    err = real_test(file, i, step);
+    %err = real_tests_known(file, i, step);
     if err ~= Inf
         avg = avg + err;
         c = c + 1;
