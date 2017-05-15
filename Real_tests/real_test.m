@@ -17,11 +17,15 @@ function [ R_err ] = real_test( file, i, step )
         fclose('all');
         return
     end
-    
+    for j = 1:length(lines(1,:))
+        lines(1:3, j) = lines(1:3, j) / norm(lines(1:3, j));
+        lines(4:6, j) = lines(4:6, j) / norm(lines(4:6, j));
+        lines(7:9, j) = lines(7:9, j) / norm(lines(7:9, j));
+    end
     R1 = R1*R2';
     R3 = R3*R2';
     
-    num_iter = 20;
+    num_iter = 25;
     num_ress = 6;
     [ best_lines, R_res1, R_res3, sum_sq ] = ransac( lines, @(l1,l2,l3) (solver(l1,l2,l3,R1,R3,t1)), num_iter, num_ress);
     
@@ -35,6 +39,7 @@ function [ R_err ] = real_test( file, i, step )
 end
 
 function [R1res, R3res] = solver(l1, l2, l3, R1, R3, t1)
+     
     [r11,r12,r13,r21,r22,r23] = solver_get_r_equations_small1(l1, l2, l3);
     R1res = [];
     R3res = [];

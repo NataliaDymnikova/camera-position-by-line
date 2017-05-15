@@ -7,15 +7,15 @@ function [ R_err, t_err ] = real_tests_known( file, i, step )
     R1 = get_r_abcd(Res(6,i), Res(7,i), Res(8,i), Res(9,i));
     R2 = get_r_abcd(Res(6,i+1*step), Res(7,i+1*step), Res(8,i+1*step), Res(9,i+1*step));
     R3 = get_r_abcd(Res(6,i+2*step), Res(7,i+2*step), Res(8,i+2*step), Res(9,i+2*step));
-    t1 = [1;1;1];
-    t3 = [1;1;1];
-    
+    t1 = [Res(3,i);Res(4,i);Res(5,i)];
+    t2 = [Res(3,i+1*step);Res(4,i+1*step);Res(5,i+1*step)];
+    t3 = [Res(3,i+2*step);Res(4,i+2*step);Res(5,i+2*step)];    
     
     file_acc = fopen(file+string('accelerometer.txt'),'r');
     Acc = fscanf(file_acc , '%d.%d %f %f %f', [5, Inf]);
-    R1_acc = Acc(3:5, i);
-    R2_acc = Acc(3:5, i+1*step);
-    R3_acc = Acc(3:5, i+2*step);
+    %R1_acc = Acc(3:5, i);
+    %R2_acc = Acc(3:5, i+1*step);
+   % R3_acc = Acc(3:5, i+2*step);
     
     lines = fscanf(ffile, '%f %f %f %f %f %f %f %f %f', [9, Inf]);
     if length(lines(1,:)) < 6
@@ -24,15 +24,28 @@ function [ R_err, t_err ] = real_tests_known( file, i, step )
         return
     end
     
+    %R1_x2 = r_x(R1_acc)*r_x(R2_acc)';
+    %R3_x2 = r_x(R3_acc)*r_x(R1_acc)';
+
     R1_x2 = r_x(R1(:,2))*r_x(R2(:,2))';
     R3_x2 = r_x(R3(:,2))*r_x(R1(:,2))';
     
     R1 = R1*R2';
     R3 = R3*R2';
     
+    for j = 1:length(lines(1,:))
+        lines(1:3, j) = lines(1:3, j) / norm(lines(1:3, j));
+        lines(4:6, j) = lines(4:6, j) / norm(lines(4:6, j));
+        lines(7:9, j) = lines(7:9, j) / norm(lines(7:9, j));
+        
+    end
+    
     num_iter = 25;
     num_ress = 4;
-    [ best_lines, R_res1, R_res3, sum_sq ] = ransac( lines, @(l1,l2,l3) (solver(l1,l2,l3,t1,t3,R1,R2,R3,R1_x2,R3_x2)), num_iter, num_ress);
+    [ best_lines, R_res1, R_res3, sum_sq, good_lines ] = ransac( lines, @(l1,l2,l3) (solver(l1,l2,l3,t1,t3,R1,R2,R3,R1_x2,R3_x2)), num_iter, num_ress);
+    
+    
+    %draw_lines(i, step, good_lines, lines);
     
     [ R_err1, t_err ] = test(R1, t1, R1_x2*R_res1, t1);
     [ R_err3, t_err3 ] = test(R3, t1, R3_x2*R_res3, t1);
@@ -49,6 +62,11 @@ function [R1res, R3res] = solver(l1, l2, l3, t1, t3, R1,R2,R3,R1_xz,R3_xz)
         l1(:,i) = R1_xz' * l1(:,i);
         %l2(:,i) = R2' * l2(:,i);
         l3(:,i) = R3_xz' * l3(:,i);
+        
+        %l1 = l1 / norm(l1);
+        %l2 = l2 / norm(l2);
+        %l3 = l3 / norm(l3);
+        
     end
 
     [c1,c2,s1,s2] = solver_get_r_equations_known_cs_diff_r_vert(l1, l2, l3);
@@ -102,3 +120,4 @@ function [Rxz] = r_x(v)
     Rxz = R0';
         
 end
+

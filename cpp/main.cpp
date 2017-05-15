@@ -8,8 +8,8 @@ using namespace std;
 int main() {
     cout << "0 -- match lines" << endl << "1 -- draw_lines" << endl;
     int i;
-    cin >> i;
-
+//    cin >> i;
+    i = 0;
     if (i == 0) {
         match_lines();
     } else if (i == 1) {

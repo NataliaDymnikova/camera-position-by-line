@@ -38,12 +38,15 @@ int match_lines() {
 
     cout << "Directory with images:\n";
     char *directory = new char[1000];
-    cin >> directory;
+//    cin >> directory;
+    string d = "C:\\MyProga\\diploma\\camera-position-by-line\\cpp\\Real_tests\\rgbd_dataset_freiburg1_floor\\rgb\\";
+    strcpy(directory, d.c_str());
     cout << "Name of directory for result:\n";
     string name;
-    cin >> name;
+//    cin >> name;
+     name = "C:\\MyProga\\diploma\\camera-position-by-line\\cpp\\floor\\";
 
-    int step = 1;
+    int step = 3;
 
     name = name + to_string(step) + "\\";
 
@@ -111,10 +114,52 @@ vector<float**> getMatches(string image_path1, string image_path2, string image_
     Ptr <BinaryDescriptor> bd = BinaryDescriptor::createBinaryDescriptor();
 
     /* compute lines */
+    std::vector<Vec4i> key1, key2, key3;
     std::vector<KeyLine> keylines1, keylines2, keylines3;
-    bd->detect(imageMat1, keylines1, mask1);
-    bd->detect(imageMat2, keylines2, mask2);
-    bd->detect(imageMat3, keylines3, mask3);
+
+//    bd->detect(imageMat1, keylines1, mask1);
+//    bd->detect(imageMat2, keylines2, mask2);
+//    bd->detect(imageMat3, keylines3, mask3);
+
+    cv::Mat img1, img2, img3;
+    Canny(imageMat1, img1, 50, 200, 3);
+    Canny(imageMat2, img2, 50, 200, 3);
+    Canny(imageMat3, img3, 50, 200, 3);
+
+    HoughLinesP(img1, key1, 1, CV_PI/180, 80, 75, 15 );
+    HoughLinesP(img2, key2, 1, CV_PI/180, 80, 75, 15 );
+    HoughLinesP(img3, key3, 1, CV_PI/180, 80, 75, 15 );
+//    imshow("v1", img1);
+//    imshow("v2", img2);
+//    imshow("v3", img3);
+//    waitKey(500);
+
+    for (Vec4i i : key1) {
+        line(mask1, cv::Point(i[0],i[1]), cv::Point(i[2],i[3]), cv::Scalar(255,255,255), 1);
+    }
+    for (Vec4i i : key2) {
+        line(mask2, cv::Point(i[0],i[1]), cv::Point(i[2],i[3]), cv::Scalar(255,255,255), 1);
+    }
+    for (Vec4i i : key3) {
+        line(mask3, cv::Point(i[0],i[1]), cv::Point(i[2],i[3]), cv::Scalar(255,255,255), 1);
+    }
+    cout << key1.size() << endl;
+//    imshow("v1", img1);
+//    imshow("v2", img2);
+//    imshow("v3", img3);
+//    waitKey(5);
+
+    bd->detect(mask1, keylines1);
+    bd->detect(mask2, keylines2);
+    bd->detect(mask3, keylines3);
+
+    cout << keylines1.size()<< endl<<endl;
+//    for (KeyLine i : keylines1) {
+//        line(img1, i.getStartPoint(), i.getEndPoint(), cv::Scalar(255,255,255), 2);
+//    }
+//    imshow("w3", img1);
+//    waitKey(5);
+
 
     /* compute descriptors */
     cv::Mat descr1, descr2, descr3;

@@ -2,3 +2,4 @@ python/**
 !python/*.py
 
 cpp/*/**
+plots/floor/
