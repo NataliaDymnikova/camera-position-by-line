@@ -8,7 +8,7 @@ function [avg, c, p0, p3] = real_tests_many(file) % 100                     1000
 %    name           num  -- avg    c    p0  inf |--| avg    c    p0  inf |--|
 % './cpp/floor/',   1000 -- 0.5345 100% 38%  0% |--| 0.6831 100% 31% 0%  |--|
 
-step = 2;
+step = 1;
 
 num = min(100 * step, 1000);
 
@@ -22,13 +22,13 @@ p4 = 0;
 p3 = 0;
 p0 = 0;
 
-for i = 1:step:num
+for i = 40:step:num+40
     if mod(i, 10) == 0
         disp([num2str(i), ' ', num2str(p0), ' ', num2str(inf)]);
     end
 
-    err = real_test(file, i, step);
-    %err = real_tests_known(file, i, step);
+    %err = real_test(file, i, step);
+    err = real_tests_known(file, i, step);
     if err ~= Inf
         avg = avg + err;
         c = c + 1;
@@ -55,11 +55,11 @@ for i = 1:step:num
                 p4 = p4 + 1;
                 p5 = p5 + 1;
             else
-                if err < 1.e-3
+                if err < 1.e-1
                     p3 = p3 + 1;
                     p4 = p4 + 1;
                 else
-                    if err < 1.e-1
+                    if err < 1.1
                         p3 = p3 + 1;
                     end
                 end

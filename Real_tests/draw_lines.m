@@ -12,7 +12,7 @@ function [] = draw_lines(i, step, good_lines, lines)
         [p11,p12] = get_points(lines,k, 1:3);
         [p21,p22] = get_points(lines,k, 4:6);
         [p31,p32] = get_points(lines,k, 7:9);
-
+        
         img1 = insertShape(img1, 'Line', [p11(1),p11(2), p12(1),p12(2)],'LineWidth',4,'Color','blue');
         img2 = insertShape(img2, 'Line', [p21(1),p21(2), p22(1),p22(2)],'LineWidth',4,'Color','blue');
         img3 = insertShape(img3, 'Line', [p31(1),p31(2), p32(1),p32(2)],'LineWidth',4,'Color','blue');
@@ -32,6 +32,14 @@ end
 function [p1,p2] = get_points(lines, j, nums)
     l = lines(:,j);
     l = l(nums);
+    fx = 517.3;
+    fy = 516.5;
+    cx = 318.6;
+    cy = 255.3;
+    K = [fx,.0,cx;
+        .0,fy,cy;
+        0,0,1];
+    l = K * l;
     if (l(2) ~= 0)
         x1 = 0;
         y1 = -l(3)/l(2);
@@ -46,4 +54,11 @@ function [p1,p2] = get_points(lines, j, nums)
 
     p1 = [x1,y1];
     p2 = [x2,y2];
+  
+    
+    %p1 = K * [p1 1]';
+    %p1 = p1(1:2) / p1(3);
+    %p2 = K * [p2 1]';
+    %p2 = p2(1:2) / p2(3);
+
 end

@@ -13,9 +13,9 @@ function [ R_err, t_err ] = real_tests_known( file, i, step )
     
     file_acc = fopen(file+string('accelerometer.txt'),'r');
     Acc = fscanf(file_acc , '%d.%d %f %f %f', [5, Inf]);
-    %R1_acc = Acc(3:5, i);
-    %R2_acc = Acc(3:5, i+1*step);
-   % R3_acc = Acc(3:5, i+2*step);
+    R1_acc = Acc(3:5, i);
+    R2_acc = Acc(3:5, i+1*step);
+    R3_acc = Acc(3:5, i+2*step);
     
     lines = fscanf(ffile, '%f %f %f %f %f %f %f %f %f', [9, Inf]);
     if length(lines(1,:)) < 6
@@ -23,26 +23,22 @@ function [ R_err, t_err ] = real_tests_known( file, i, step )
         fclose('all');
         return
     end
-    
+          
     %R1_x2 = r_x(R1_acc)*r_x(R2_acc)';
     %R3_x2 = r_x(R3_acc)*r_x(R1_acc)';
 
-    R1_x2 = r_x(R1(:,2))*r_x(R2(:,2))';
-    R3_x2 = r_x(R3(:,2))*r_x(R1(:,2))';
+    R1_x2 = r_x(R2(:,2))' * r_x(R1(:,2));
+    R3_x2 = r_x(R1(:,2))'*r_x(R3(:,2));
     
     R1 = R1*R2';
     R3 = R3*R2';
+    t1 = t1-t2;
+    t3 = t3-t2;
     
-    for j = 1:length(lines(1,:))
-        lines(1:3, j) = lines(1:3, j) / norm(lines(1:3, j));
-        lines(4:6, j) = lines(4:6, j) / norm(lines(4:6, j));
-        lines(7:9, j) = lines(7:9, j) / norm(lines(7:9, j));
-        
-    end
-    
-    num_iter = 25;
+    num_iter = 50;
     num_ress = 4;
-    [ best_lines, R_res1, R_res3, sum_sq, good_lines ] = ransac( lines, @(l1,l2,l3) (solver(l1,l2,l3,t1,t3,R1,R2,R3,R1_x2,R3_x2)), num_iter, num_ress);
+    k_lim = 1e-12;
+    [ best_lines, R_res1, R_res3, sum_sq, good_lines ] = ransac( lines, @(l1,l2,l3) (solver(l1,l2,l3,t1,t3,R1,R2,R3,R1_x2,R3_x2)), num_iter, num_ress, t1,t3,k_lim);
     
     
     %draw_lines(i, step, good_lines, lines);
@@ -62,11 +58,6 @@ function [R1res, R3res] = solver(l1, l2, l3, t1, t3, R1,R2,R3,R1_xz,R3_xz)
         l1(:,i) = R1_xz' * l1(:,i);
         %l2(:,i) = R2' * l2(:,i);
         l3(:,i) = R3_xz' * l3(:,i);
-        
-        %l1 = l1 / norm(l1);
-        %l2 = l2 / norm(l2);
-        %l3 = l3 / norm(l3);
-        
     end
 
     [c1,c2,s1,s2] = solver_get_r_equations_known_cs_diff_r_vert(l1, l2, l3);
@@ -77,6 +68,7 @@ function [R1res, R3res] = solver(l1, l2, l3, t1, t3, R1,R2,R3,R1_xz,R3_xz)
     if length(c1) == 0
         R1res = eye(3);
         R3res = eye(3);
+        disp('Doesnt found!!!!!!!');
         return
     end
     

@@ -1,34 +1,34 @@
-function [t1, t3] = find_t( R1, R3, l1, l2, l3 )
+function [t1_guess, t3_guess, t1errs, t3errs] = find_t( R1, R3, t1, t3, l1, l2, l3 )
 
-    syms t11 t12 t13 t31 t32 t33 real;
-    t3 = [t31;t32;t33];
-    
-    j = 1;
-    for i = 1:3
-        t1(i, :) = (R1(:,i) * t3' - (l2(i,j) / l1(:,j))' / l3(:,j)) * (eye(3) / R3(:,i)');
+    rind = 1;
+    A = [];
+    for li = 1:5
+        for ci = 1:3
+            a = l1(:, li)'*R1(:, ci);
+            A(rind, 4:6) = a*l3(:, li);
+            b = -R3(:, ci)'*l3(:, li);
+            A(rind, 1:3) = b*l1(:, li);
+            A(rind, li+6) = - l2(ci, li);
+            rind = rind+1;
+        end
     end
-    t11 = t1(1,1);
-    t12 = t1(2,2);
-    t13 = t1(3,3);
-    
-    t1 = [t11;t12;t13];
-       
-    j = 2
-    i = 1
-    t3 = ((eye(3) / R1(:,i)')' * ((l2(i,j) / l1(:,j))' / l3(:,j) + t1 * R3(:,i)'))';
-    t31 = t3(1);
-    t11 = eval(t11);
-    
-    i = 2
-    t3 = ((eye(3) / R1(:,i)')' * ((l2(i,j) / l1(:,j))' / l3(:,j) + t1 * R3(:,i)'))';
-    t32 = t3(2);
-    t12 = eval(t12);
 
-    i = 3
-    t3 = ((eye(3) / R1(:,i)')' * ((l2(i,j) / l1(:,j))' / l3(:,j) + t1 * R3(:,i)'))';
-    t33 = t3(3);
-    t13 = eval(t13);
-
+    [U,S,V] = svd(A);
+    x_ans = V(:, end);
+    t1f = x_ans(1:3);
+    t3f = x_ans(4:6);
     
+    
+    t1_guess = t1f/norm(t1f)*norm(t1);
+    [~,mct1] = max(abs(t1_guess));
+    s = 1.0;
+    if (t1_guess(mct1)*t1(mct1)<0)
+        s = -1;
+    end
+    t1_guess = s*t1_guess;
+    t3_guess = s*t3f/norm(t3f)*norm(t3);
+    
+    t1errs = norm(t1_guess-t1)/norm(t1);
+    t3errs = norm(t3_guess-t3)/norm(t3);
 end
 
