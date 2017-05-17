@@ -50,7 +50,7 @@ function [R1res, R3res] = solver(l1, l2, l3, R1, R3, t1)
     if length(r11) == 0
         R1res = eye(3);
         R3res = eye(3);
-        disp('Doesnt found!!!!!!!');
+        %disp('Doesnt found!!!!!!!');
         return
     end
     

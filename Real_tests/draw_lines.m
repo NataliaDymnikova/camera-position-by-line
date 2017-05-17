@@ -36,10 +36,7 @@ function [p1,p2] = get_points(lines, j, nums)
     fy = 516.5;
     cx = 318.6;
     cy = 255.3;
-    K = [fx,.0,cx;
-        .0,fy,cy;
-        0,0,1];
-    l = K * l;
+
     if (l(2) ~= 0)
         x1 = 0;
         y1 = -l(3)/l(2);
@@ -55,10 +52,4 @@ function [p1,p2] = get_points(lines, j, nums)
     p1 = [x1,y1];
     p2 = [x2,y2];
   
-    
-    %p1 = K * [p1 1]';
-    %p1 = p1(1:2) / p1(3);
-    %p2 = K * [p2 1]';
-    %p2 = p2(1:2) / p2(3);
-
-end
+ end

@@ -59,7 +59,7 @@ for i = 40:step:num+40
                     p3 = p3 + 1;
                     p4 = p4 + 1;
                 else
-                    if err < 1.1
+                    if err < 1
                         p3 = p3 + 1;
                     end
                 end
